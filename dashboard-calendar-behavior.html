@@ -10,106 +10,128 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../polymer/polymer.html">
 
-<!--
-An element providing a solution to no problem in particular.
-
-Example:
-
-    <dashboard-calendar-behavior></dashboard-calendar-behavior>
-
-Example:
-
-    <dashboard-calendar-behavior>
-      <h2>Hello dashboard-calendar-behavior</h2>
-    </dashboard-calendar-behavior>
-
-@demo demo/index.html
-@hero hero.svg
--->
-
 <script>
-  (function(namespace, behavior) {
-    'use strict';
+  'use strict';
+  window.Dashboard = window.Dashboard || {};
 
-    (window[namespace] = window[namespace] || {})[behavior] = {
-      properties: {
+  /**
+   * Adds functionality for calendar elements.
+   *
+   * @polymerBehavior
+   */
+  Dashboard.CalendarBehavior = {
+    properties: {
 
-        weekDay: {
-          type: Number
-        },
-
-        day: {
-          type: Number
-        },
-
-        month: {
-          type: Number
-        },
-
-        year: {
-          type: Number
-        },
-
-        _weekDayNames: {
-          type: Array,
-          value: [
-            'Sunday',
-            'Monday',
-            'Tuesday',
-            'Wednesday',
-            'Thursday',
-            'Friday',
-            'Saturday'
-          ]
-        },
-
-        _monthNames: {
-          type: Array,
-          value: [
-            'January',
-            'February',
-            'March',
-            'April',
-            'May',
-            'June',
-            'July',
-            'August',
-            'September',
-            'October',
-            'November',
-            'December'
-          ]
-        }
+      /** Day of the week (0-6) */
+      weekDay: {
+        type: Number
       },
 
-      ready: function() {
-        this._newDay();
+      /** Day of the month (1-31) */
+      day: {
+        type: Number
       },
 
-      _newDay: function() {
-        var date = new Date();
-        var year = date.getFullYear();
-        var month = date.getMonth();
-        var day = date.getDate();
-
-        if (day === 1 || !this.year) {
-          this.set('year', year);
-          this.set('month', month);
-        }
-
-        this.set('weekDay', date.getDay());
-        this.set('day', day);
-
-        setTimeout(this._newDay.bind(this), new Date(year, month, day + 1) - date);
+      /** Month (0-11) */
+      month: {
+        type: Number
       },
 
-      _weekDayName: function(value) {
-        return this._weekDayNames[value];
+      /** Year */
+      year: {
+        type: Number
       },
 
-      _monthName: function(value) {
-        return this._monthNames[value];
+      /**
+       * Week day names
+       *
+       * @type Array<string>
+       * @private
+       */
+      _weekDayNames: {
+        type: Array,
+        value: [
+          'Sunday',
+          'Monday',
+          'Tuesday',
+          'Wednesday',
+          'Thursday',
+          'Friday',
+          'Saturday'
+        ]
+      },
+
+      /**
+       * Month names
+       *
+       * @type Array<string>
+       * @private
+       */
+      _monthNames: {
+        type: Array,
+        value: [
+          'January',
+          'February',
+          'March',
+          'April',
+          'May',
+          'June',
+          'July',
+          'August',
+          'September',
+          'October',
+          'November',
+          'December'
+        ]
       }
-    };
-  })('Dashboard', 'CalendarBehavior');
+    },
+
+    ready: function() {
+      this._newDay();
+    },
+
+    /**
+     * Updates the day when a new day occurs
+     *
+     * @private
+     */
+    _newDay: function() {
+      var date = new Date();
+      var year = date.getFullYear();
+      var month = date.getMonth();
+      var day = date.getDate();
+
+      if (day === 1 || !this.year) {
+        this.set('year', year);
+        this.set('month', month);
+      }
+
+      this.set('weekDay', date.getDay());
+      this.set('day', day);
+
+      setTimeout(this._newDay.bind(this), new Date(year, month, day + 1) - date);
+    },
+
+    /**
+     * Converts the numerical week day to a string
+     *
+     * @param value {number} 0-6
+     * @returns {string}
+     * @private
+     */
+    _weekDayName: function(value) {
+      return this._weekDayNames[value];
+    },
+
+    /**
+     * Converts the numerical month to a string
+     *
+     * @param value {number} 0-11
+     * @returns {string}
+     * @private
+     */
+    _monthName: function(value) {
+      return this._monthNames[value];
+    }
+  };
 </script>
