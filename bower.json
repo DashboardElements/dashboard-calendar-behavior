@@ -8,7 +8,9 @@
   "keywords": [
     "web-component",
     "polymer",
-    "seed"
+    "behavior",
+    "dashboard",
+    "calendar"
   ],
   "main": "dashboard-calendar-behavior.html",
   "license": "http://polymer.github.io/LICENSE.txt",
